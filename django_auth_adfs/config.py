@@ -64,7 +64,7 @@ class Settings(object):
         self.GROUPS_CLAIM = "group"
         self.LOGIN_EXEMPT_URLS = []
         self.MIRROR_GROUPS = False
-        self.RELYING_PARTY_ID = None  # Required
+        self.RELYING_PARTY_ID = None
         self.RETRIES = 3
         self.SERVER = None  # Required
         self.TENANT_ID = None  # Required
@@ -82,7 +82,7 @@ class Settings(object):
         required_settings = [
             "AUDIENCE",
             "CLIENT_ID",
-            "RELYING_PARTY_ID",
+            # "RELYING_PARTY_ID",
             "USERNAME_CLAIM",
         ]
 
@@ -335,7 +335,7 @@ class ProviderConfig(object):
         query.update({
             "response_type": "code",
             "client_id": settings.CLIENT_ID,
-            "resource": settings.RELYING_PARTY_ID,
+            # "resource": settings.RELYING_PARTY_ID,
             "redirect_uri": self.redirect_uri(request),
             "state": redirect_to,
         })
