@@ -53,7 +53,7 @@ class OAuth2CallbackView(View):
                     redirect_to = django_settings.LOGIN_REDIRECT_URL
                 url_is_safe = url_has_allowed_host_and_scheme(
                     url=redirect_to,
-                    allowed_hosts=[request.get_host()],
+                    allowed_hosts=[request.get_host()] + settings.ALLOWED_HOSTS,
                     require_https=request.is_secure(),
                 )
                 redirect_to = redirect_to if url_is_safe else '/'
