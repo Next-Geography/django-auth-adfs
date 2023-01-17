@@ -1,5 +1,6 @@
 import base64
 import logging
+from urllib.parse import urlencode
 
 from django.conf import settings as django_settings
 from django.contrib.auth import authenticate, login, logout
@@ -57,6 +58,11 @@ class OAuth2CallbackView(View):
                     require_https=request.is_secure(),
                 )
                 redirect_to = redirect_to if url_is_safe else '/'
+                if "?" in redirect_to:
+                    redirect_to += "&" 
+                else:
+                    redirect_to += "?"
+                redirect_to += urlencode({ "csrftoken": request.COOKIES.get("csrftoken") })
                 return redirect(redirect_to)
             else:
                 # Return a 'disabled account' error message
