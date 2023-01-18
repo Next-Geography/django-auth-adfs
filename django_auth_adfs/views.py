@@ -62,7 +62,10 @@ class OAuth2CallbackView(View):
                     redirect_to += "&" 
                 else:
                     redirect_to += "?"
-                redirect_to += urlencode({ "csrftoken": request.COOKIES.get("csrftoken") })
+                redirect_to += urlencode({
+                    "csrftoken": request.META.get("CSRF_COOKIE"),
+                    "sessionid": request.session.session_key,
+                })
                 return redirect(redirect_to)
             else:
                 # Return a 'disabled account' error message
