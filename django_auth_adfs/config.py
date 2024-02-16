@@ -329,13 +329,15 @@ class ProviderConfig(object):
             redirect_to = django_settings.LOGIN_REDIRECT_URL
         redirect_to = base64.urlsafe_b64encode(redirect_to.encode()).decode()
         query = QueryDict(mutable=True)
-        query.update({
+        conf = {
             "response_type": "code",
             "client_id": settings.CLIENT_ID,
-            # "resource": settings.RELYING_PARTY_ID,
             "redirect_uri": self.redirect_uri(request),
             "state": redirect_to,
-        })
+        }
+        if settings.RELYING_PARTY_ID:
+            conf["resource"] = settings.RELYING_PARTY_ID
+        query.update(conf)
         if self._mode == "openid_connect":
             query["scope"] = "openid"
             if (disable_sso is None and settings.DISABLE_SSO) or disable_sso is True:
