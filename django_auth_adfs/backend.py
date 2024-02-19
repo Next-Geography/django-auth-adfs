@@ -100,6 +100,8 @@ class AdfsBaseBackend(ModelBackend):
         if not claims:
             raise PermissionDenied
 
+        print(claims)
+
         user = self.create_user(claims)
         self.update_user_attributes(user, claims)
         self.update_user_groups(user, claims)
