@@ -58,14 +58,14 @@ class OAuth2CallbackView(View):
                     require_https=request.is_secure(),
                 )
                 redirect_to = redirect_to if url_is_safe else '/'
-                if "?" in redirect_to:
-                    redirect_to += "&" 
-                else:
-                    redirect_to += "?"
-                redirect_to += urlencode({
-                    "csrftoken": request.META.get("CSRF_COOKIE"),
-                    "sessionid": request.session.session_key,
-                })
+                # if "?" in redirect_to:
+                #     redirect_to += "&" 
+                # else:
+                #     redirect_to += "?"
+                # redirect_to += urlencode({
+                #     "csrftoken": request.META.get("CSRF_COOKIE"),
+                #     "sessionid": request.session.session_key,
+                # })
                 return redirect(redirect_to)
             else:
                 # Return a 'disabled account' error message
